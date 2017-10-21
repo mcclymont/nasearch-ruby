@@ -9,6 +9,11 @@ class Source < ApplicationRecord
     text
   end
 
+  def extract_html(input)
+    text = CGI.unescapeHTML(input)
+    Nokogiri::XML(text).children[0]
+  end
+
   def extract_title
     xml = Nokogiri::XML(text)
     unless xml.errors.empty?
@@ -46,7 +51,16 @@ class Source < ApplicationRecord
         next if topic_node['text'].start_with?('<')
 
         topic = topic_node['text']
-        topic_node.xpath('outline').each do |note_node|
+        notes = topic_node.xpath('outline')
+
+        if notes.all? { |note| note.children.empty? && !note['text'].starts_with?('<') }
+          # We aren't going to get a separate title and then further
+          # children nodes with the actual text
+          # This is the text - and we didn't get a title node.
+          notes = [topic_node]
+        end
+
+        notes.each do |note_node|
           note = show.notes.new(
             topic: topic,
             title: strip_html(note_node['text'])
