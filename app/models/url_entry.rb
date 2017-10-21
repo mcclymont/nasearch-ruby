@@ -6,8 +6,4 @@ class UrlEntry < ApplicationRecord
   def to_s
     text + ' ' + url
   end
-
-  def index?
-    true
-  end
 end

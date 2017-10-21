@@ -9,8 +9,30 @@ class Source < ApplicationRecord
     text
   end
 
+  def extract_title
+    xml = Nokogiri::XML(text)
+    unless xml.errors.empty?
+      return puts "Nokogiri errors for episode #{show_id}"
+    end
+
+    title = xml.at_css('head title').content
+    if show_id == 726
+      'Weather Whiplash' # Quotes weren't closed
+    elsif show_id == 589
+      nil # Not available
+    else
+      CGI.unescapeHTML(title).match(/"(.*)"/)[1]
+    end
+  end
+
+  def set_show!
+    self.show = Show.create!(id: show_id, name: extract_title) if
+      show_id && !Show.exists?(show_id)
+  end
+
   def process_text!
     ActiveRecord::Base.transaction do
+      set_show! unless show.present?
       show.notes.destroy_all
 
       xml = Nokogiri::XML(text)
@@ -34,6 +56,7 @@ class Source < ApplicationRecord
 
           children = [note_node] if children.empty?
 
+          urls = []
           entries = children.map do |entry_node|
             text = entry_node['text']
             next if text.blank?
@@ -45,22 +68,21 @@ class Source < ApplicationRecord
 
             text = strip_html(text)
 
-            attrs = {text: text}
             if entry_node.key?('url')
               url = entry_node['url']
-              if attrs[:text].blank?
-                attrs[:text] = File.basename(URI.parse(url).path)
+              if text.blank?
+                text = File.basename(URI.parse(url).path)
               end
-              attrs.merge!(url: url)
+              urls << {text: text, url: url}
             end
 
-            next if attrs[:text].blank?
+            next if text.blank?
 
-            attrs
+            text
           end.compact
 
-          if entries.any?
-            urls, texts = entries.partition { |h| h.key? :url }
+          if entries.any? || urls.any?
+            note.text = entries.join("\n")
 
             if note.title.blank? && urls.length == 1
               url = urls.first[:url]
@@ -69,7 +91,6 @@ class Source < ApplicationRecord
             end
 
             note.save!
-            note.text_entries.create!(texts)
             note.url_entries.create!(urls)
           end
         end

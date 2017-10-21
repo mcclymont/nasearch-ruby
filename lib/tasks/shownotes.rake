@@ -34,30 +34,11 @@ namespace :shownotes do
       end
 
       text = response.body
-      xml = Nokogiri::XML(text)
-      unless xml.errors.empty?
-        puts "Nokogiri errors for episode #{show_num}"
-        next
-      end
-
-      title = xml.at_css('head title').content
-      title = if show_num == 726
-                'Weather Whiplash' # Quotes weren't closed
-              elsif show_num == 589
-                nil # Not available
-              else
-                CGI.unescapeHTML(title).match(/"(.*)"/)[1]
-              end
-      next if title.nil?
-
       ActiveRecord::Base.transaction do
         Source.create!(
           text: text,
           file_type: 'opml',
-          show: Show.create!(
-            id: show_num,
-            name: title
-          )
+          show_id: show_num
         )
       end
     end
