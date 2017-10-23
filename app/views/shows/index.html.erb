@@ -1,0 +1,7 @@
+<% @shows.each do |show| -%>
+    <div>
+      <a href="/shows/<%= show.id %>">
+        <%= show.id %>: <%= show.name %>
+      </a>
+    </div>
+<% end -%>

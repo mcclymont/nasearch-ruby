@@ -1,0 +1,12 @@
+<ul>
+  <% @show.notes.order(:topic).group_by(&:topic).each do |topic, notes| -%>
+      <li>
+        <h3><%= topic %></h3>
+        <ul>
+          <% notes.each do |note| -%>
+            <li><h4><%= note.title %></h4><%= note.text.first(500) %></li>
+          <% end -%>
+        </ul>
+      </li>
+  <% end -%>
+</ul>

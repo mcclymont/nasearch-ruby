@@ -1,0 +1,177 @@
+@import "bootstrap";
+
+html {
+  font-size: 14px;
+}
+
+.bg-info {
+  background-color: #d9edf7 !important
+}
+
+.bg-grey {
+  background-color: #F6F6F6;
+}
+
+.bg-primary {
+  color: #fff;
+  background-color: #428bca !important;
+}
+
+.input-group-addon {
+  width: 7.5rem;
+}
+
+.show-link {
+  color: #212529;
+  width: 3rem;
+  display: inline-block;
+}
+
+li.note {
+  padding: 4px 4px 0 4px;
+
+  .row > div:first-child {
+    white-space: nowrap;
+  }
+
+  .row > div {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+}
+
+ul {
+  margin-bottom: 0;
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 960px;
+  }
+}
+
+.headphones {
+  height: 1rem;
+}
+
+.caret {
+  margin-right: 6px;
+}
+
+.padded {
+  margin: 6px;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.click-close:hover {
+  background-color: #E2E2E2;
+}
+
+.show-title {
+  margin-top: 1em;
+}
+
+.shownote-heading {
+  margin: 0 0 0 0;
+}
+
+.stacker {
+  position: absolute;
+  right: 0;
+  z-index: 100;
+}
+
+.selected-topics {
+  float: right;
+  width: 100%;
+}
+
+/* topic dropdown menu */
+.topic-dropdown {
+  right: auto;
+  left: auto;
+  max-width: 65%;
+  transform: none !important;
+  top: 100% !important;
+  left: 0 !important;
+}
+
+.topic-data {
+  max-height: 400px;
+  overflow: scroll;
+}
+
+.topic-suggestion {
+  margin: 5px;
+  padding: 2px 5px;
+  border-radius: 5px;
+  float: left;
+  cursor: pointer;
+}
+
+.fake-suggestion .invisible{
+  float: left;
+}
+
+/* overriding bootstrap */
+.jumbotron {
+  margin-bottom: 10px;
+
+  .container > .row {
+    margin-bottom: 0.3rem;
+  }
+}
+
+.bg-primary a {
+  color: orange;
+}
+
+/* styles for icons in lists */
+.icon-list li {
+  padding: 0 0 5px 20px;
+  display: block;
+  position: relative;
+}
+
+.icon-list li:before {
+  font-family: 'Glyphicons Halflings';
+  position: absolute;
+  left: 0;
+  top: 3px;
+  font-size: 80%
+}
+
+.chevron-right li:before {
+  content: '\e080';
+}
+
+.right {
+  float: right;
+}
+
+.highlighted {
+  font-weight: bold;
+}
+
+.listen-link {
+  margin-right: 4px;
+}
+
+.left-spacing {
+  margin-left: 4px;
+}
+
+.link-icon {
+  color: inherit;
+}
+
+.link-icon:hover {
+  color: inherit;
+}
+
+.navbar {
+  margin-bottom: 0;
+}

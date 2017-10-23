@@ -1,0 +1,56 @@
+<div class="jumbotron">
+    <div class="container">
+        <div class="row">
+            <div class="input-group">
+                <!--<span class="input-group-addon front-label">Text</span>-->
+                <input id="search-field" type="text" autofocus="true" placeholder="Search terms" class="form-control">
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-group">
+                <span class="input-group-addon front-label">From Show</span>
+
+                <input id="show-from" type="text" class="form-control" placeholder="<%= @min_show %>">
+            <span class="input-group-addon front-label">To Show</span>
+                <input id="show-to" type="text" class="form-control" placeholder="<%= @max_show %>">
+            </div>
+        </div>
+
+        <div class="row">
+            <div id="top-input" class="input-group">
+              <span class="input-group-addon front-label">Topic Filters</span>
+              <input data-toggle="dropdown" id="topic-field" type="text" class="form-control" />
+              <span class="topic-dropdown dropdown-menu" role="menu" aria-labelledby="topic-field">
+                <span class="padded"><b>Enter text to filter topics</b></span>
+
+                <div class="topic-data">
+                  <span class="topic-suggestions"></span>
+                </div>
+              </span>
+              <span class="input-group-btn">
+                <button id="search-button" class="btn btn-primary" type="button">Search</button>
+              </span>
+            </div>
+        </div>
+
+      <div class="row">
+        <div class="selected-topics">
+        </div>
+      </div>
+    </div>
+</div>
+
+<div id="content" class="container">
+<p>Welcome to the No Agenda Shownote Search! Just enter a search term and optionally select 1 or more topic filters. You can narrow down the topic list by just typing in the text field. If you want to see all notes for a set of topics leave the text search field blank and select the topics you want to display.</p>
+<p><b>Disclaimer</b>: Older episodes pre episode 490 have not yet been parsed and likely won't be any time soon due to a complete lack of free time.</p>
+<p>If you are interested in helping out with parsing out some of the older shownotes or contributing any feature enhancements you'd like to see in the Shownote Search then hit me up on GitHub and I'll be happy to point you in the right direction.</p>
+</div>
+
+<div class="container">
+<div class="row text-center">
+  <div class="col">
+    <button id="load-button" type="button" class="btn btn-primary" style="display: none">Load More</button>
+  </div>
+</div>
+</div>
+
