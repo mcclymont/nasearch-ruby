@@ -39,10 +39,16 @@ class Source < ApplicationRecord
       show_id && !Show.exists?(show_id)
   end
 
+  def delete_notes!
+    note_ids = show.notes.pluck(:id)
+    UrlEntry.where(note: note_ids).delete_all
+    Note.where(show: show).delete_all
+  end
+
   def process_text!
     ActiveRecord::Base.transaction do
       set_show! unless show.present?
-      show.notes.destroy_all
+      delete_notes!
 
       xml = Nokogiri::XML(text)
       start = xml.at_xpath("/opml/body/outline[@type='tabs']")
