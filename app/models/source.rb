@@ -1,5 +1,6 @@
 class Source < ApplicationRecord
   belongs_to :show
+  before_validation :set_show!
 
   def inspect
     "#<Source show_id: #{show_id} file_type: #{file_type}>"
@@ -57,7 +58,6 @@ class Source < ApplicationRecord
       clips = start.xpath("outline[@text='CLIPS & DOCS']/outline")
 
       (shownotes + clips).each do |topic_node|
-        puts topic_node['text']
         next if topic_node['text'].start_with?('<')
 
         topic = topic_node['text']
