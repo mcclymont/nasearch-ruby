@@ -14,10 +14,7 @@ class HomeController < ApplicationController
     notes = Note.all
 
     unless params[:string].blank?
-      # notes = notes.joins(:url_entries)
       notes = notes.where("plainto_tsquery('english', ?) @@ to_tsvector('english', notes.text)", params[:string])
-      # notes = notes.joins(:url_entries).where(UrlEntry.arel_table[:url].contains(params[:string].split))
-      # note = note.or(notes.joins(:url_entries).where)
       urls = UrlEntry.all
       params[:string].split.each do |word|
         urls = UrlEntry.where(UrlEntry.arel_table[:url].lower.matches("%#{word.downcase}%"))
