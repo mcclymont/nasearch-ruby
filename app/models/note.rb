@@ -1,18 +1,20 @@
 class Note < ApplicationRecord
   belongs_to :show
   has_many :url_entries, dependent: :delete_all
-  before_save :truncate_text!
+  before_save -> { self.text = truncate_text(MAX_STORAGE_SIZE) }
+
+  MAX_STORAGE_SIZE = 900.kilobytes
+  MAX_AJAX_SIZE = 10.kilobytes
 
   def inspect
     "#<Note id: #{id}, show_id: #{show_id}, topic: #{topic.inspect}, title: #{title.inspect}?"
   end
 
-  private
-
-  def truncate_text!
-    # Actual max size for making into tsvector: 1_048_575
-    if text.length > 900.kilobytes
-      self.text = text.first(900.kilobytes) + "\n-------TRUNCATED-------"
+  def truncate_text(size=MAX_AJAX_SIZE)
+    if text.length > size
+      text.first(size) + "\n-------TRUNCATED-------"
+    else
+      text
     end
   end
 end
