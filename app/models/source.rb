@@ -90,8 +90,6 @@ class Source < ApplicationRecord
               '-1)r&&r.push(o);else'
             ].any? { |str| text.starts_with? str }
 
-            text = strip_html(text)
-
             if entry_node.key?('url')
               url = entry_node['url']
               if text.blank?
