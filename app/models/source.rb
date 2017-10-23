@@ -1,6 +1,10 @@
 class Source < ApplicationRecord
   belongs_to :show
 
+  def inspect
+    "#<Source show_id: #{show_id} file_type: #{file_type}>"
+  end
+
   def strip_html(input)
     text = CGI.unescapeHTML(input)
     if text.start_with?('<')
