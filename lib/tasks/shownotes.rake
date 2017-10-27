@@ -1,4 +1,6 @@
 namespace :shownotes do
+  error = -> (msg) { puts msg; Rails.logger.error(msg) }
+
   desc "TODO"
   task fetch: :environment do
     require 'net/http'
@@ -39,8 +41,9 @@ namespace :shownotes do
           ).process_text!
         end
       rescue => e
-        Rails.logger.error("Problem saving show #{show_num}")
-        Rails.logger.error e.backtrace.join("\n")
+        error["Problem saving show #{show_num}"]
+        error[e.message]
+        error[e.backtrace.join("\n")]
       end
     end
   end
