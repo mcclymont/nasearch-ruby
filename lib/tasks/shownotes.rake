@@ -15,7 +15,8 @@ namespace :shownotes do
     last_show_number.downto(MINIMUM_SHOW).each do |show_num|
       next if Show.exists?(show_num)
 
-      url = "http://#{show_num}.noagendanotes.com"
+      domain = show_num < 582 ? 'nashownotes.com' : 'noagendanotes.com'
+      url = "http://#{show_num}.#{domain}"
       response = Net::HTTP.get_response(URI.parse(url))
       if ['301', '302'].include? response.code
         url = response['Location'].gsub('html', 'opml')

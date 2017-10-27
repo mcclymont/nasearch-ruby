@@ -148,10 +148,11 @@
         function formatResults(response) {
           return "<ul class='list-unstyled'>" +
           response.results.map(function(result) {
+            var notes_url = "http://" + result.show_id + (result.show_id < 582 ? '.nashownotes.com' : '.noagendanotes.com')
             return "<li class='note'>" +
                 "<div class='row'>" +
                   "<div class='col-1'>" +
-                    "<a href='http://"+result.show_id+".nashownotes.com' class='show-link'>["+ result.show_id + "]</a>" +
+                    "<a href='"+notes_url+"' class='show-link'>["+ result.show_id + "]</a>" +
                     "<a href='http://www.noagendaplayer.com/listen/" + result.show_id + "' class='link-icon' title='Listen to show " + result.show_id + " at noagendaplayer.com'>" +
                       "<img class='headphones' src='/assets/images/glyphicons-77-headphones.png'>" +
                     "</a>" +
