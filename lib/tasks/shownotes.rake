@@ -3,7 +3,7 @@ namespace :shownotes do
   task fetch: :environment do
     require 'net/http'
 
-    MINIMUM_SHOW = 490
+    MINIMUM_SHOW = 489 # Before that the URLs are not consistent
     NA_RSS_URL = 'http://feed.nashownotes.com/'
 
     response = Net::HTTP.get_response(URI.parse(NA_RSS_URL))
