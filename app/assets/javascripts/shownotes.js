@@ -148,7 +148,7 @@
         function formatResults(response) {
           return "<ul class='list-unstyled'>" +
           response.results.map(function(result) {
-            var notes_url = "http://" + result.show_id + (result.show_id < 582 ? '.nashownotes.com' : '.noagendanotes.com')
+            var notes_url = "http://" + result.show_id + (result.show_id < 600 ? '.nashownotes.com' : '.noagendanotes.com')
             return "<li class='note'>" +
                 "<div class='row'>" +
                   "<div class='col-1'>" +
