@@ -4,7 +4,7 @@ class Note < ApplicationRecord
   before_save -> { self.text = truncate_text(MAX_STORAGE_SIZE) }
 
   MAX_STORAGE_SIZE = 900.kilobytes
-  MAX_AJAX_SIZE = 10.kilobytes
+  MAX_AJAX_SIZE = 3.kilobytes
 
   def inspect
     "#<Note id: #{id}, show_id: #{show_id}, topic: #{topic.inspect}, title: #{title.inspect}?"
