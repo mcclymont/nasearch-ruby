@@ -17,7 +17,10 @@ namespace :shownotes do
         puts show_num
         Source.process!(show_num, true)
       rescue => e
-        raise e if Rails.env.development? && show_num != 505
+        raise e if Rails.env.development? && ![
+          505, # Corrupted
+          570, # HTTP 500
+        ].include?(show_num)
         error = -> (msg) { puts msg; Rails.logger.error(msg) }
         error["Problem saving show #{show_num}"]
         error[e.message]
