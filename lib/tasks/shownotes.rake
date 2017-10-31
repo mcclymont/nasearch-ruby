@@ -1,6 +1,4 @@
 namespace :shownotes do
-  error = -> (msg) { puts msg; Rails.logger.error(msg) }
-
   desc "TODO"
   task fetch: :environment do
     require 'net/http'
@@ -15,32 +13,12 @@ namespace :shownotes do
     last_show_number = Integer(first_url.match(/\d+/)[0])
 
     last_show_number.downto(MINIMUM_SHOW).each do |show_num|
-      next if Show.exists?(show_num)
-
-      domain = show_num < 582 ? 'nashownotes.com' : 'noagendanotes.com'
-      url = "http://#{show_num}.#{domain}"
-      response = Net::HTTP.get_response(URI.parse(url))
-      if ['301', '302'].include? response.code
-        url = response['Location'].gsub('html', 'opml')
-        response = Net::HTTP.get_response(URI.parse(url))
-      end
-      puts url
-
-      if response.code != '200'
-        puts "#{response.code} received for #{url}"
-        next
-      end
-
-      text = response.body
       begin
-        ActiveRecord::Base.transaction do
-          Source.create!(
-            text: text,
-            file_type: 'opml',
-            show_id: show_num
-          ).process_text!
-        end
+        puts show_num
+        Source.process!(show_num, true)
       rescue => e
+        raise e if Rails.env.development?
+        error = -> (msg) { puts msg; Rails.logger.error(msg) }
         error["Problem saving show #{show_num}"]
         error[e.message]
         error[e.backtrace.join("\n")]
