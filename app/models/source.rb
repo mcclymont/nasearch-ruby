@@ -14,10 +14,10 @@ class Source < ApplicationRecord
       if show_id <= NEW_HTML_FORMAT_START
         extend ::Loaders::NewHTML
       else
-        Rails.logger.warning "File type #{file_type} not implemented"
+        Rails.logger.warn "File type #{file_type} not implemented"
       end
     else
-      Rails.logger.warning "File type #{file_type} not implemented"
+      Rails.logger.warn "File type #{file_type} not implemented"
     end
   end
 
