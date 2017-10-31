@@ -69,14 +69,10 @@ module Loaders::NewHTML
       topic = topic_node.css('> a').map(&:text).reject(&:blank?).first
       next if topic.blank?
 
-      notes = topic_node.next_element.css('> .divOutlineList > .divOutlineItem')
-
-      if !are_clips && notes.all? { |note| note['class'] == 'divOutlineItem' }
-        # We aren't going to get a separate title and then further
-        # children nodes with the actual text
-        # This is the text - and we didn't get a title node.
-        notes = [topic_node]
-      end
+      notes_list = topic_node.next_element.at_css('> .divOutlineList')
+      notes = !are_clips && notes_list.at_css('> :not(.divOutlineItem)').nil? ? # No expandable nodes
+                [topic_node] : # This is a note without a title, not a topic. Example at topic '500 From Molly Wood'
+                notes_list.css('> .divOutlineItem') # Normal case
 
       notes.each do |note_node|
         next if note_node.text.match? /^[ ]*-+$/ # Some are just '------------' (and some start with a space)
