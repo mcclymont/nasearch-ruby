@@ -5,8 +5,8 @@ namespace :shownotes do
 
   process = -> (show_num, reprocess) do
     begin
-      puts show_num
-      Source.process!(show_num, reprocess)
+      processed = Source.process!(show_num, reprocess)
+      puts "Processed show #{show_num}" if processed
     rescue => e
       raise e if Rails.env.development? && ![
         505, # Corrupted

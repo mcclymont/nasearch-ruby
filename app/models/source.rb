@@ -48,7 +48,7 @@ class Source < ApplicationRecord
     require 'net/http'
 
     show = Show.find_by(id: show_num)
-    return show if show && !reprocess
+    return if show && !reprocess
 
     if show.nil? || redownload
       domain = (show_num < 600) ? 'nashownotes.com' : 'noagendanotes.com'
