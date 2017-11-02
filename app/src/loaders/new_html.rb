@@ -99,11 +99,9 @@ module Loaders::NewHTML
 
           if entry_node.children.count == 1 && (a = entry_node.css('> a').first)
             url = a['href']
-            if text.blank?
-              text = File.basename(URI.parse(url).path)
-            end
-            urls << {text: text, url: url}
-            text = "<a href='#{url}'>#{text}</a>"
+            url_text = text.blank? ? File.basename(URI.parse(url).path) : text
+            urls << {text: url_text, url: url}
+            text = a.to_s
           end
 
           next if text.blank?
