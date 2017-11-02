@@ -8,13 +8,18 @@ namespace :shownotes do
       processed = Source.process!(show_num, reprocess)
       puts "Processed show #{show_num}" if processed
     rescue => e
-      raise e if Rails.env.development? && ![
+      unexpected_failure = ![
         505, # Corrupted
         570, # HTTP 500
       ].include?(show_num)
-      error["Problem saving show #{show_num}"]
-      error[e.message]
-      error[e.backtrace.join("\n")]
+
+      if unexpected_failure
+        raise e if Rails.env.development?
+
+        error["Problem saving show #{show_num}"]
+        error[e.message]
+        error[e.backtrace.join("\n")]
+      end
     end
   end
 
