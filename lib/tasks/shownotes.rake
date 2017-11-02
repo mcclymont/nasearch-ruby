@@ -35,6 +35,8 @@ namespace :shownotes do
     first_url = feed.at_css('channel > item > link').content
     last_show_number = Integer(first_url.match(/\d+/)[0])
 
+    puts "Newest show number from feed: #{last_show_number}"
+
     last_show_number.downto(MINIMUM_SHOW).each do |show_num|
       process.call show_num, false
     end
