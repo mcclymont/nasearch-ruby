@@ -108,15 +108,15 @@
           topicPopupView = new TopicPopupView();
         });
 
-        function handlePageResponse(page, pageCount) {
-            $("#load-button").text("Load More");
-            $("#search-button").text("Search");
-            if (page === pageCount) {
-                loadComplete = true;
-                $("#load-button").hide();
-            } else {
-                $("#load-button").show();
-            }
+        function handlePageResponse(has_more) {
+          $("#load-button").text("Load More");
+          $("#search-button").text("Search");
+          if (has_more) {
+            $("#load-button").show();
+          } else {
+            loadComplete = true;
+            $("#load-button").hide();
+          }
         }
 
         function startSearch() {
@@ -138,11 +138,10 @@
             page += 1;
             payload.page = page;
             $.post('search', payload,
-                function (response) {
-                  $("#content").append(formatResults(response));
-                    handlePageResponse(response.page,
-                        response.page_count);
-                });
+              function (response) {
+                $("#content").append(formatResults(response));
+                handlePageResponse(response.has_more);
+              });
         }
 
         function formatResults(response) {
@@ -188,7 +187,7 @@
                 function (response) {
                   var initial = "<div><p>Found " + response.count + " matches</p></div>";
                   $("#content").html(initial + formatResults(response));
-                  handlePageResponse(response.page, response.page_count);
+                  handlePageResponse(response.has_more);
                 });
         }
 

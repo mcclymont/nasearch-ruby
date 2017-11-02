@@ -17,4 +17,8 @@ class Note < ApplicationRecord
       text
     end
   end
+
+  def as_json(*_options)
+    slice(:show_id, :title, :topic).merge(text: truncate_text)
+  end
 end

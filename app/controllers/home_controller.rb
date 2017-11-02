@@ -1,5 +1,7 @@
 class HomeController < ApplicationController
 
+  PAGE_SIZE = 21
+
   def index
     @min_show = Show.order(:id).pluck(:id).first
     @max_show = Show.order(id: :desc).pluck(:id).first
@@ -34,19 +36,18 @@ class HomeController < ApplicationController
       notes = notes.where(topic: params[:topics])
     end
 
-    count = notes.count
-
-    page = [1, params[:page].to_i].max
-    notes = notes.order(show_id: :desc).offset((page-1) * 20).limit(20)
+    page  = [1, params[:page].to_i].max
+    count = page == 1 ? notes.count : nil
+    notes = notes
+              .order(show_id: :desc)
+              .offset((page-1) * PAGE_SIZE)
+              .first(PAGE_SIZE)
 
     render json: {
-      count: count,
-      page: page,
-      page_count: (count / 20) + 1,
-      results: notes.map do |note|
-        note.slice(:show_id, :title, :topic)
-            .merge(text: note.truncate_text)
-      end
+      count:    count,
+      page:     page,
+      has_more: notes.length == PAGE_SIZE,
+      results:  notes.first(PAGE_SIZE - 1)
     }
   end
 end
