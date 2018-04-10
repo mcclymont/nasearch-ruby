@@ -37,7 +37,7 @@ module Loaders::OPML
       start = xml.at_xpath("/opml/body/outline[@type='tabs']")
 
       shownotes = start.xpath("./outline[@text='Shownotes']/outline")
-      clips = start.xpath("./outline[@text='CLIPS & DOCS']/outline | ./outline[@text='Clips and Stuff']/outline | ./outline[@text='Clips Docs & Stuff']/outline")
+      clips = start.xpath("./outline[@text='CLIPS & DOCS']/outline | ./outline[@text='Clips & Docs']/outline | ./outline[@text='Clips and Stuff']/outline | ./outline[@text='Clips Docs & Stuff']/outline")
 
       if shownotes.empty? || clips.empty?
         empty = []
