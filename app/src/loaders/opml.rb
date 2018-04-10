@@ -44,10 +44,10 @@ module Loaders::OPML
         empty << 'shownotes' if shownotes.empty?
         empty << 'clips' if clips.empty?
         message = empty.join(', ') + ' empty!'
-        if show_id == 889 || show_id == 850
-          puts message
-        else
+        if Rails.env.dev?
           raise message
+        else
+          puts message
         end
       end
 
