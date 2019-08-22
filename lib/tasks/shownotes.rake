@@ -32,8 +32,11 @@ namespace :shownotes do
     response = Net::HTTP.get_response(URI.parse(NA_RSS_URL))
     feed = Nokogiri::XML(response.body)
 
-    first_url = feed.at_css('channel > item > link').content
-    last_show_number = Integer(first_url.match(/\d+/)[0])
+    # We now have MF-XYZ links
+    urls = feed.css('td.link > a').map(&:content).select { |url| url.start_with? 'NA-' }
+    # Shows seem to be sorted lexicographically rather than chronologically
+    show_numbers = urls.map { |url| Integer(url.match(/\d+/)[0]) }.sort
+    last_show_number = show_numbers.last
 
     puts "Newest show number from feed: #{last_show_number}"
 
