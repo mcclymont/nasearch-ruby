@@ -81,7 +81,7 @@ GEM
       mini_portile2 (~> 2.3.0)
     pg (0.21.0)
     popper_js (1.12.5)
-    rack (2.0.3)
+    rack (2.0.8)
     rack-test (0.7.0)
       rack (>= 1.0, < 3)
     rails (5.1.4)
