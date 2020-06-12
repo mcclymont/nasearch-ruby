@@ -71,5 +71,51 @@ RSpec.describe Source, type: :model do
 
       expect(actual.deep_symbolize_keys).to eq expected.deep_symbolize_keys
     end
+
+    context 'with show 1250' do
+      let(:data) { File.read(Rails.root.join('spec', 'fixtures', 'NoAgenda1250.opml')) }
+      let(:source) { Source.create!(text: data, file_type: 'opml', show: Show.create!(name: 'Test Show')) }
+
+      before do
+        source.process_text!
+      end
+
+      it 'finds all the clips' do
+        clips = source.show.notes.where(topic: 'All Clips')
+
+        expect(clips.count).to eq 52
+      end
+
+      it 'parses clips correctly' do
+        clips = source.show.notes.where(topic: 'All Clips')
+        clip = clips.find { |c| c.title == 'Last show definition of racism.mp3' }
+        expect(clip.text).to include 'http://adam.curry.com/enc/1591906237.485_lastshowdefinitionofracism.mp3'
+
+        expect(clips.map(&:text)).to all match /\.(mp3|m4a)/
+      end
+
+      it 'finds all the shownotes' do
+        notes = source.show.notes.where.not(topic: 'All Clips')
+
+        expect(notes.count).to eq 164
+      end
+
+      it 'parses a normal, nested shownote correctly' do
+        notes = source.show.notes.where.not(topic: 'All Clips')
+
+        note = notes.where(topic: 'BLM', title: 'Repetition compulsion - Wikipedia').first!
+        expect(note.text).to include 'Repetition compulsion is a psychological phenomenon'
+        expect(note.text).to include 'can also be used to cover the repetition of behaviour'
+      end
+
+      it 'deals with untitled, unnested notes correctly' do
+        notes = source.show.notes.where.not(topic: 'All Clips')
+        # This is a weird one. Not sure what to do with it.
+        # I have asserted that it should be present, but maybe we should just skip them.
+        # Or maybe we should join these together until we find the next nested note in the group.
+        note = notes.where(topic: 'TODAY', title: 'Katie Williams Apology - White people memo').first!
+        expect(note.text).to eq "<b><i>Katie Williams Apology - White people memo</i></b>"
+      end
+    end
   end
 end
