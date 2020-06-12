@@ -44,11 +44,7 @@ module Loaders::OPML
         empty << 'shownotes' if shownotes.empty?
         empty << 'clips' if clips.empty?
         message = empty.join(', ') + ' empty!'
-        if Rails.env.dev?
-          raise message
-        else
-          puts message
-        end
+        raise message
       end
 
       process_topics(shownotes, false)
