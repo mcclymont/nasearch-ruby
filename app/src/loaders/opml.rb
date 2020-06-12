@@ -101,7 +101,7 @@ module Loaders::OPML
               text = File.basename(URI.parse(url).path)
             end
             urls << {text: text, url: url}
-            text = "<a href=\"#{URI.encode url}\">#{text}</a>"
+            text = "<a href=\"#{url}\">#{text}</a>"
           end
 
           next if text.blank?
