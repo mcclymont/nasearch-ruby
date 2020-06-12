@@ -4,7 +4,7 @@ module Loaders::OPML
     if text.start_with?('<')
       text = Nokogiri::XML(text).children[0].text
     end
-    text
+    text.strip
   end
 
   def extract_html(input)
