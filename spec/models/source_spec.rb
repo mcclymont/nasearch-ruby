@@ -41,8 +41,8 @@ RSpec.describe Source, type: :model do
           {
             title: 'White Nationalists March on University of Virginia - The New York Times',
             text: [
-              "<a href='https://www.nytimes.com/2017/08/11/us/white-nationalists-rally-charlottesville-virginia.html?smid=fb-share'>Link to Article</a>",
-              "<a href='http://adam.curry.com/art/1502551602_zrtBDCVz.html'>Archived Version</a>",
+              '<a href="https://www.nytimes.com/2017/08/11/us/white-nationalists-rally-charlottesville-virginia.html?smid=fb-share">Link to Article</a>',
+              '<a href="http://adam.curry.com/art/1502551602_zrtBDCVz.html">Archived Version</a>',
               'Sat, 12 Aug 2017 15:26',
               'Photo White nationalists rallied at a statue of...',
               "Thousands of people '-- many from out of town '-- are..."
