@@ -28,6 +28,12 @@ module Loaders::OPML
     end
   end
 
+  TOLERATE_NO_CLIPS = Set.new([
+    1018, # Has clips but they aren't nested like they should be https://1018.noagendanotes.com
+    889, # Christmas Special
+    850, # 200.8 Re-Redux
+  ])
+
   def process_text!
     ActiveRecord::Base.transaction do
       set_show! unless show.present?
@@ -39,12 +45,12 @@ module Loaders::OPML
       shownotes = start.xpath("./outline[@text='Shownotes']/outline")
       clips = start.xpath("./outline[@text='CLIPS & DOCS']/outline | ./outline[@text='Clips & Docs']/outline | ./outline[@text='Clips and Stuff']/outline | ./outline[@text='Clips Docs & Stuff']/outline | ./outline[@text='Clips and Docs']/outline")
 
-      if shownotes.empty? || clips.empty?
-        empty = []
-        empty << 'shownotes' if shownotes.empty?
-        empty << 'clips' if clips.empty?
-        message = empty.join(', ') + ' empty!'
-        raise message
+      if shownotes.empty? && clips.empty?
+        raise 'No shownotes or clips!'
+      elsif shownotes.empty?
+        raise 'No shownotes!'
+      elsif clips.empty?
+        raise 'No clips!' unless TOLERATE_NO_CLIPS.include?(show.id)
       end
 
       process_topics(shownotes, false)
