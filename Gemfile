@@ -7,7 +7,7 @@ end
 
 gem 'bootstrap', '~> 4.3.1'
 gem 'jquery-rails'
-gem 'rails', '~> 5.1.3'
+gem 'rails', '~> 5.2.4'
 gem 'sass-rails', '~> 5.0'
 
 gem 'pg'
