@@ -31,6 +31,9 @@ module Loaders::OPML
   TOLERATE_NO_CLIPS = Set.new([
     1018, # Has clips but they aren't nested like they should be https://1018.noagendanotes.com
     889, # Christmas Special
+  ])
+
+  TOLERATE_NO_CLIPS_OR_SHOWNOTES = Set.new([
     850, # 200.8 Re-Redux
   ])
 
@@ -46,7 +49,7 @@ module Loaders::OPML
       clips = start.xpath("./outline[@text='CLIPS & DOCS']/outline | ./outline[@text='Clips & Docs']/outline | ./outline[@text='Clips and Stuff']/outline | ./outline[@text='Clips Docs & Stuff']/outline | ./outline[@text='Clips and Docs']/outline")
 
       if shownotes.empty? && clips.empty?
-        raise 'No shownotes or clips!'
+        raise 'No shownotes or clips!' unless TOLERATE_NO_CLIPS_OR_SHOWNOTES.include?(show.id)
       elsif shownotes.empty?
         raise 'No shownotes!'
       elsif clips.empty?
