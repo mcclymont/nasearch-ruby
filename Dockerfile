@@ -18,4 +18,4 @@ COPY --chown=search:search . /srv/search
 ENV RAILS_ENV=production
 ENV SECRET_KEY_BASE=1
 RUN bundle exec rake assets:precompile
-CMD ["bundle", "exec", "rails", "s", "-p", "8080"]
+CMD ["bundle", "exec", "rails", "s", "-p", "3000"]
