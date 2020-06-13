@@ -28,10 +28,12 @@ html {
 }
 
 li.note {
-  padding: 4px 4px 0 4px;
+  padding: 2px 0;
 
   .row > div:first-child {
     white-space: nowrap;
+    justify-content: center;
+    display: flex;
   }
 
   .row > div {
@@ -60,6 +62,7 @@ ul {
 
 .headphones {
   height: 1rem;
+  margin-left: 5px;
 }
 
 .caret {

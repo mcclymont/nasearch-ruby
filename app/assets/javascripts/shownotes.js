@@ -167,8 +167,10 @@
                   "</div>" +
                 "</div>" +
               "</li>" +
-              "<div class='bg-grey shownote-entries' style='display: none'>" +
-                result.text.split("\n").map(function(line) { return "<p>" + line + "</p>" }).join('') +
+              "<div class='row' style='display: none'>" +
+                "<div class='col-12 col-md-9 offset-md-1 bg-grey shownote-entries'>" +
+                  result.text.split("\n").map(function(line) { return "<p>" + line + "</p>" }).join('') +
+                "</div>" +
               "</div>"
           }).join('');
         }
