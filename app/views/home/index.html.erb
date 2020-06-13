@@ -1,24 +1,40 @@
 <div class="jumbotron">
     <div class="container">
         <div class="row">
+          <div class="col">
             <div class="input-group">
-                <!--<span class="input-group-addon front-label">Text</span>-->
+                <!--<span class="input-group-prepend front-label">Text</span>-->
                 <input id="search-field" type="text" autofocus="true" placeholder="Search terms" class="form-control">
             </div>
+          </div>
         </div>
+
         <div class="row">
+          <div class="col">
             <div class="input-group">
-                <span class="input-group-addon front-label">From Show</span>
-
-                <input id="show-from" type="text" class="form-control" placeholder="<%= @min_show %>">
-            <span class="input-group-addon front-label">To Show</span>
-                <input id="show-to" type="text" class="form-control" placeholder="<%= @max_show %>">
+              <div class="input-group-prepend">
+                <span class="input-group-text" style="width: 7rem">From Show</span>
+              </div>
+              <input id="show-from" type="text" class="form-control" placeholder="<%= @min_show %>">
             </div>
+          </div>
+
+          <div class="col">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">To Show</span>
+              </div>
+              <input id="show-to" type="text" class="form-control" placeholder="<%= @max_show %>">
+            </div>
+          </div>
         </div>
 
         <div class="row">
+          <div class="col">
             <div id="top-input" class="input-group">
-              <span class="input-group-addon front-label">Topic Filters</span>
+              <div class="input-group-prepend">
+                <span class="input-group-text" style="width: 7rem">Topic Filters</span>
+              </div>
               <input data-toggle="dropdown" id="topic-field" type="text" class="form-control" />
               <span class="topic-dropdown dropdown-menu" role="menu" aria-labelledby="topic-field">
                 <span class="padded"><b>Enter text to filter topics</b></span>
@@ -31,6 +47,7 @@
                 <button id="search-button" class="btn btn-primary" type="button">Search</button>
               </span>
             </div>
+          </div>
         </div>
 
       <div class="row">
