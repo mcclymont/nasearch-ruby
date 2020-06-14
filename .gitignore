@@ -24,3 +24,5 @@
 /.idea
 /vendor
 /tmp
+
+public/assets
