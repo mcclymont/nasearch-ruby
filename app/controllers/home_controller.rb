@@ -34,6 +34,7 @@ class HomeController < ApplicationController
     notes = notes
               .order(show_id: :desc)
               .offset((page-1) * PAGE_SIZE)
+              .select(:show_id, :title, :topic, :text)
               .first(PAGE_SIZE)
 
     render json: {
