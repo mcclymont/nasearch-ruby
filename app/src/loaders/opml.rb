@@ -123,6 +123,7 @@ module Loaders::OPML
             note.title = "File: #{extension[1..-1]}" unless extension.blank?
           end
 
+          note.set_document(urls)
           note.save!
           note.url_entries.create!(urls)
         end

@@ -21,4 +21,14 @@ class Note < ApplicationRecord
   def as_json(*_options)
     slice(:show_id, :title, :topic).merge(text: truncate_text)
   end
+
+  def set_document(urls)
+    split_filenames = []
+    urls.each do |hash|
+      filename = File.basename(hash[:url])
+      split_filenames << filename.split(/[_\-.]/).join(" ")
+    end
+
+    self.document = ([title] + split_filenames + [text]).join(" \n")
+  end
 end
